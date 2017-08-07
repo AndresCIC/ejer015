@@ -13,11 +13,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using ejer015.Models;
-using ejer015.Providers;
-using ejer015.Results;
+using ejer15.Models;
+using ejer15.Providers;
+using ejer15.Results;
 
-namespace ejer015.Controllers
+namespace ejer15.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -170,14 +170,14 @@ namespace ejer015.Controllers
                 && ticket.Properties.ExpiresUtc.HasValue
                 && ticket.Properties.ExpiresUtc.Value < DateTimeOffset.UtcNow))
             {
-                return BadRequest("Error de inicio de sesión externo.");
+                return BadRequest("External login failure.");
             }
 
             ExternalLoginData externalData = ExternalLoginData.FromIdentity(ticket.Identity);
 
             if (externalData == null)
             {
-                return BadRequest("El inicio de sesión externo ya está asociado a una cuenta.");
+                return BadRequest("The external login is already associated with an account.");
             }
 
             IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
@@ -384,7 +384,7 @@ namespace ejer015.Controllers
             base.Dispose(disposing);
         }
 
-        #region Aplicaciones auxiliares
+        #region Helpers
 
         private IAuthenticationManager Authentication
         {
@@ -410,7 +410,7 @@ namespace ejer015.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    // No hay disponibles errores ModelState para enviar, por lo que simplemente devuelva un BadRequest vacío.
+                    // No ModelState errors are available to send, so just return an empty BadRequest.
                     return BadRequest();
                 }
 
@@ -478,7 +478,7 @@ namespace ejer015.Controllers
 
                 if (strengthInBits % bitsPerByte != 0)
                 {
-                    throw new ArgumentException("strengthInBits debe ser uniformemente divisible por 8.", "strengthInBits");
+                    throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
                 }
 
                 int strengthInBytes = strengthInBits / bitsPerByte;

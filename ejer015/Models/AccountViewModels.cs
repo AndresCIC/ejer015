@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ejer015.Models
+namespace ejer15.Models
 {
-    // Modelos devueltos por las acciones de AccountController.
+    // Models returned by AccountController actions.
 
     public class ExternalLoginViewModel
     {

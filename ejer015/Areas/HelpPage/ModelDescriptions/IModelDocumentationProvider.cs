@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace ejer015.Areas.HelpPage.ModelDescriptions
+namespace ejer15.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

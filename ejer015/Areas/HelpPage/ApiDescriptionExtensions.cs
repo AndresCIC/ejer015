@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace ejer015.Areas.HelpPage
+namespace ejer15.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {
