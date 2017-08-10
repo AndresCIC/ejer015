@@ -35,7 +35,6 @@ namespace ejer15.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<ejer15.Persona> Personas { get; set; }
+        
     }
 }

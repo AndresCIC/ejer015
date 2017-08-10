@@ -1,20 +1,55 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-	<meta charset="utf-8" />
-    <link rel="shortcut icon" type="image/png" href="Content/jasmine/jasmine_favicon.png">
-    <link rel="stylesheet" type="text/css" href="Content/jasmine/jasmine.css">
+    <title>React + C# = PEPINO</title>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
 
-    <script type="text/javascript" src="Scripts/jasmine/jasmine.js"></script>
-    <script type="text/javascript" src="Scripts/jasmine/jasmine-html.js"></script>
-    <script type="text/javascript" src="Scripts/jasmine/boot.js"></script>
-    
     <script src="/Scripts/jquery-1.10.2.js"></script>
 
-    <script type="text/javascript" src="Scripts/test/JavaScript.js"></script>
+    <!--<script src="/Scripts/App.js"></script>
+     <script src="/Scripts/index.js"></script>-->
 </head>
 <body>
-
+    <div id="root">
+    </div>
 </body>
 </html>
+<script src="/Scripts/form.jsx"></script>
+
+<script>
+
+    // A $( document ).ready() block.
+    $(document).ready(function () {
+      
+        $.get("api/Entradas/5", function (data) {
+
+            $("#edad").val(data.Id);
+            $("#nombre").val(data.Precio);
+        });
+
+        $("#personalDataForm").submit(function (event) {
+
+            // Stop form from submitting normally
+            event.preventDefault();
+
+            var posting = $.post('api/Entradas', $('#personalDataForm').serialize());
+
+            $.ajax({
+                url: 'api/Entradas',
+                type: 'PUT',
+                data: $('#personalDataForm').serialize(),
+                success: function (result) {
+                    $("#root").append("Id: " + response.Id + "</br>").append("Precio: " + response.Precio + "</br>");
+                }
+            });
+
+        });
+        
+    });
+
+</script>
+
+
