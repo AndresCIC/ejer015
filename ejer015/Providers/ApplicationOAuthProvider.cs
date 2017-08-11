@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using ejer15.Models;
+using ejercicio18.Models;
 
-namespace ejer15.Providers
+namespace ejercicio18.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -35,7 +35,7 @@ namespace ejer15.Providers
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                context.SetError("invalid_grant", "El nombre de usuario o la contraseña no son correctos.");
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace ejer15.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            // Resource owner password credentials does not provide a client ID.
+            // La credenciales de la contraseña del propietario del recurso no proporcionan un id. de cliente.
             if (context.ClientId == null)
             {
                 context.Validated();

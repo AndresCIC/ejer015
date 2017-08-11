@@ -1,6 +1,6 @@
 using System;
 
-namespace ejer15.Areas.HelpPage.ModelDescriptions
+namespace ejercicio18.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

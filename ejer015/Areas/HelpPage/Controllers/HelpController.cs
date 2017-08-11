@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using ejer15.Areas.HelpPage.ModelDescriptions;
-using ejer15.Areas.HelpPage.Models;
+using ejercicio18.Areas.HelpPage.ModelDescriptions;
+using ejercicio18.Areas.HelpPage.Models;
 
-namespace ejer15.Areas.HelpPage.Controllers
+namespace ejercicio18.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

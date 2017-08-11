@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>React + C# = PEPINO</title>
+    <title>Personas REACT</title>
     <meta charset="utf-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
@@ -23,26 +23,29 @@
 
     // A $( document ).ready() block.
     $(document).ready(function () {
-      
-        $.get("api/Entradas/5", function (data) {
 
-            $("#edad").val(data.Id);
-            $("#nombre").val(data.Precio);
-        });
+        function GetYRellenaFormulario() {
+            $.get("api/Personas/1", function (data) {                
+                $("#nombre").val(data.Nombre);
+                $("#apellidos").val(data.Apellidos);
+                $("#edad").val(data.Edad);
+            });
+        }
+       // GetYRellenaFormulario();
+
 
         $("#personalDataForm").submit(function (event) {
 
             // Stop form from submitting normally
             event.preventDefault();
-
-            var posting = $.post('api/Entradas', $('#personalDataForm').serialize());
-
+            
             $.ajax({
                 url: 'api/Entradas',
                 type: 'PUT',
                 data: $('#personalDataForm').serialize(),
-                success: function (result) {
-                    $("#root").append("Id: " + response.Id + "</br>").append("Precio: " + response.Precio + "</br>");
+                success: function (result) {             
+                    //$("#root").append("Id: " + response.Id + "</br>").append("Precio: " + response.Precio + "</br>");
+                   // GetYRellenaFormulario();
                 }
             });
 

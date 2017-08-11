@@ -1,8 +1,8 @@
 using React;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ejer015.ReactConfig), "Configure")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ejercicio18.ReactConfig), "Configure")]
 
-namespace ejer015
+namespace ejercicio18
 {
 	public static class ReactConfig
 	{

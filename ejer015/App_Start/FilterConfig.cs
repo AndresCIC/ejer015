@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace ejer15
+namespace ejercicio18
 {
     public class FilterConfig
     {

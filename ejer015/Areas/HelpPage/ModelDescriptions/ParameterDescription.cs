@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ejer15.Areas.HelpPage.ModelDescriptions
+namespace ejercicio18.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterDescription
     {

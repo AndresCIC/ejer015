@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using ejer15.Areas.HelpPage.ModelDescriptions;
-using ejer15.Areas.HelpPage.Models;
+using ejercicio18.Areas.HelpPage.ModelDescriptions;
+using ejercicio18.Areas.HelpPage.Models;
 
-namespace ejer15.Areas.HelpPage
+namespace ejercicio18.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

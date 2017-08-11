@@ -8,14 +8,21 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ejer15;
-using ejer15.Models;
+using ejercicio18.Models;
+using ejercicio18.Services;
 
-namespace ejer15.Controllers
+namespace ejercicio18.Controllers
 {
     public class PersonasController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public IPersonasService personasService;
+
+        public PersonasController(IPersonasService personasService)
+        {
+            this.personasService = personasService;
+        }
 
         // GET: api/Personas
         public IQueryable<Persona> GetPersonas()
@@ -27,7 +34,7 @@ namespace ejer15.Controllers
         [ResponseType(typeof(Persona))]
         public IHttpActionResult GetPersona(long id)
         {
-            Persona persona = db.Personas.Find(id);
+            Persona persona = personasService.Read(id);
             if (persona == null)
             {
                 return NotFound();
@@ -50,22 +57,13 @@ namespace ejer15.Controllers
                 return BadRequest();
             }
 
-            db.Entry(persona).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                personasService.Update(persona);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (NoEncontradoException)
             {
-                if (!PersonaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -80,8 +78,7 @@ namespace ejer15.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Personas.Add(persona);
-            db.SaveChanges();
+            persona = personasService.create(persona);
 
             return CreatedAtRoute("DefaultApi", new { id = persona.Id }, persona);
         }

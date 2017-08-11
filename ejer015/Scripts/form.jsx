@@ -1,3 +1,4 @@
+    
 class Formulario extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +9,8 @@ class Formulario extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleLimpiar = this.handleLimpiar.bind(this);
   }
 
   handleInputChange(event) {
@@ -17,25 +20,39 @@ class Formulario extends React.Component {
 
     this.setState({
       [name]: value
-
+        
     });
   }
-
-  handleSubmitChange(event) {
-
-
-
-  }
-  handleEdad(event){
-
-    this.state.nombre > 100 ? "NOPE" : ''
-
+ 
+  handleLimpiar(){
+    this.setState(initialState);
+    //this.setState({
+    //      nombre: nombreInicial,
+    //      apellidos: apellidosInicial,
+    //      edad: edadInicial
+    //  });
   }
 
+    
+  componentDidMount() {
+      //Hace la llamada get y luego la magia con lambdas y la de dios
+      $.get("api/Personas/1", (data) => this.realizaActualizacion(data));
+  }
+
+  realizaActualizacion(data) {
+      let nombre = data.Nombre;
+      this.setState({
+          nombre: data.Nombre,
+          apellidos: data.Apellidos,
+          edad: data.Edad
+      });
+  }
+
+  
 
     
 
-  render() {
+  render() { 
     return (
       <form action="/" method="POST" id="personalDataForm">
         <label>
@@ -75,11 +92,18 @@ class Formulario extends React.Component {
           <br />
         <label>          
           <input
+                 id="enviar"
             name="enviar"
             type="submit"
-            value="Enviar"
+            value="Actualizar"
             onChange={this.handleSubmitChange} />
         </label>
+           <label>
+          <input name="limpiar"
+                 type="button"
+                 value="Limpiar"
+                 onClick={this.handleLimpiar} />
+           </label>
 
 
       </form>

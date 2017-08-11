@@ -1,4 +1,4 @@
-namespace ejer15.Areas.HelpPage
+namespace ejercicio18.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

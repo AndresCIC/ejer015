@@ -8,10 +8,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using ejer15.Providers;
-using ejer15.Models;
+using ejercicio18.Providers;
+using ejercicio18.Models;
 
-namespace ejer15
+namespace ejercicio18
 {
     public partial class Startup
     {
@@ -19,19 +19,19 @@ namespace ejer15
 
         public static string PublicClientId { get; private set; }
 
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        // Para obtener más información para configurar la autenticación, visite http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context and user manager to use a single instance per request
+            // Configure el contexto de base de datos y el administrador de usuarios para usar una única instancia por solicitud
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+            // Permitir que la aplicación use una cookie para almacenar información para el usuario que inicia sesión
+            // y una cookie para almacenar temporalmente información sobre un usuario que inicia sesión con un proveedor de inicio de sesión de terceros
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Configure the application for OAuth based flow
+            // Configure la aplicación para el flujo basado en OAuth
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -39,14 +39,14 @@ namespace ejer15
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                // In production mode set AllowInsecureHttp = false
+                // En el modo de producción establezca AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
 
-            // Enable the application to use bearer tokens to authenticate users
+            // Permitir que la aplicación use tokens portadores para autenticar usuarios
             app.UseOAuthBearerTokens(OAuthOptions);
 
-            // Uncomment the following lines to enable logging in with third party login providers
+            // Quitar los comentarios de las siguientes líneas para habilitar el inicio de sesión con proveedores de inicio de sesión de terceros
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
             //    clientSecret: "");

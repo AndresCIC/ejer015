@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace ejer15.Results
+namespace ejercicio18.Results
 {
     public class ChallengeResult : IHttpActionResult
     {

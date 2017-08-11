@@ -1,4 +1,4 @@
-namespace ejer15.Areas.HelpPage.ModelDescriptions
+namespace ejercicio18.Areas.HelpPage.ModelDescriptions
 {
     public class EnumValueDescription
     {

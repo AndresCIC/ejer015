@@ -1,96 +1,97 @@
-using ejer15.Models;
-using ejer15.Repository;
-using ejer15.Servicios;
+using ejercicio18.Services;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using System;
-using System.Collections.Generic;
 using System.Web.Http;
 using Unity.WebApi;
+using System;
+using System.Collections.Generic;
+using ejercicio18.Models;
 
-namespace ejer15
+namespace ejercicio18
 {
     public static class UnityConfig
     {
         public static void RegisterComponents()
         {
             var container = new UnityContainer();
+
             container.AddNewExtension<Interception>();
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
-            container.RegisterType<IEntradasService, EntradasService>(
+            container.RegisterType<IPersonasService, PersonasService>(
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<DBInterceptor>());
-            container.RegisterType<IEntradasRepository, EntradasRepository>();
+            container.RegisterType<IPersonasRepository, PersonasRepository>();
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 
-
-    public class DBInterceptor : IInterceptionBehavior
-    {
-      public IMethodReturn Invoke(IMethodInvocation input,
-        GetNextInterceptionBehaviorDelegate getNext)
+        public class DBInterceptor : IInterceptionBehavior
         {
-            IMethodReturn result;
-            if (ApplicationDbContext.applicationDbContext == null) { 
-                using (var context = new ApplicationDbContext())
+            public IMethodReturn Invoke(IMethodInvocation input,
+              GetNextInterceptionBehaviorDelegate getNext)
+            {
+                IMethodReturn result;
+                if (ApplicationDbContext.applicationDbContext == null)
                 {
-                    ApplicationDbContext.applicationDbContext = context;
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    using (var context = new ApplicationDbContext())
                     {
-                        try
+                        ApplicationDbContext.applicationDbContext = context;
+                        using (var dbContextTransaction = context.Database.BeginTransaction())
                         {
-
-                            result = getNext()(input, getNext);
-
-
-                            if (result.Exception != null)
+                            try
                             {
-                                throw result.Exception;
-                            }
-                            context.SaveChanges();
 
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception e)
-                        {
-                            dbContextTransaction.Rollback();
-                            throw new Exception("He hecho rollback de la transacción", e);
+                                result = getNext()(input, getNext);
+
+
+                                if (result.Exception != null)
+                                {
+                                    throw result.Exception;
+                                }
+                                context.SaveChanges();
+
+                                dbContextTransaction.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                dbContextTransaction.Rollback();
+                                throw new Exception("He hecho rollback de la transacción", e);
+                            }
                         }
                     }
+                    ApplicationDbContext.applicationDbContext = null;
                 }
-                ApplicationDbContext.applicationDbContext = null;
-            } else
+                else
+                {
+
+                    result = getNext()(input, getNext);
+
+
+                    if (result.Exception != null)
+                    {
+                        throw result.Exception;
+                    }
+                }
+                return result;
+            }
+
+            public IEnumerable<Type> GetRequiredInterfaces()
+            {
+                return Type.EmptyTypes;
+            }
+
+            public bool WillExecute
+            {
+                get { return true; }
+            }
+
+            private void WriteLog(string message)
             {
 
-                result = getNext()(input, getNext);
-
-
-                if (result.Exception != null)
-                {
-                    throw result.Exception;
-                }
-        }
-            return result;
-        }
-
-        public IEnumerable<Type> GetRequiredInterfaces()
-        {
-            return Type.EmptyTypes;
-        }
-
-        public bool WillExecute
-        {
-            get { return true; }
-        }
-
-        private void WriteLog(string message)
-        {
-
+            }
         }
     }
-}
